@@ -2,6 +2,13 @@ import pickle
 import streamlit as st
 from streamlit_option_menu import option_menu
 
+# Page config
+st.set_page_config(
+    page_title="Multiple Disease Prediction",
+    page_icon="🥼",
+    layout="wide",
+
+)
 
 # loading the saved models
 
@@ -9,21 +16,21 @@ diabetes_model = pickle.load(open('models/diabetes_model.sav', 'rb'))
 
 heart_disease_model = pickle.load(open('models/heart_disease_model.sav', 'rb'))
 
-parkinsons_model = pickle.load(open('models/parkinsons_model.sav', 'rb'))
+parkinson_model = pickle.load(open('models/parkinson_model.sav', 'rb'))
 
 
 # sidebar for navigation
 selected = option_menu('Multiple Disease Prediction Dashboard',
 
-                       ['Diabetes Prediction',
+                       ['Home', 'Diabetes Prediction',
                         'Heart Disease Prediction',
-                        'Parkinsons Prediction'],
-                       icons=['activity', 'heart', 'person'],
-                       default_index=0)
+                        "Parkinson's Prediction"],
+                       icons=['house', 'activity', 'heart', 'person'],
+                       orientation='horizontal')
 
 
 # Diabetes Prediction Page
-if (selected == 'Diabetes Prediction'):
+if selected == 'Diabetes Prediction':
 
     # page title
     st.title('Diabetes Prediction using ML')
@@ -65,7 +72,7 @@ if (selected == 'Diabetes Prediction'):
         diab_prediction = diabetes_model.predict(
             [[Pregnancies, Glucose, BloodPressure, SkinThickness, Insulin, BMI, DiabetesPedigreeFunction, Age]])
 
-        if (diab_prediction[0] == 1):
+        if diab_prediction[0] == 1:
             diab_diagnosis = 'The person is diabetic'
         else:
             diab_diagnosis = 'The person is not diabetic'
@@ -74,7 +81,7 @@ if (selected == 'Diabetes Prediction'):
 
 
 # Heart Disease Prediction Page
-if (selected == 'Heart Disease Prediction'):
+if selected == 'Heart Disease Prediction':
 
     # page title
     st.title('Heart Disease Prediction using ML')
@@ -94,13 +101,13 @@ if (selected == 'Heart Disease Prediction'):
         trestbps = st.text_input('Resting Blood Pressure')
 
     with col2:
-        chol = st.text_input('Serum Cholestoral in mg/dl')
+        chol = st.text_input('Serum Cholesterol in mg/dl')
 
     with col3:
         fbs = st.text_input('Fasting Blood Sugar > 120 mg/dl')
 
     with col1:
-        restecg = st.text_input('Resting Electrocardiographic results')
+        restecg = st.text_input('Resting Electrocardiograph results')
 
     with col2:
         thalach = st.text_input('Maximum Heart Rate achieved')
@@ -115,11 +122,11 @@ if (selected == 'Heart Disease Prediction'):
         slope = st.text_input('Slope of the peak exercise ST segment')
 
     with col3:
-        ca = st.text_input('Major vessels colored by flourosopy')
+        ca = st.text_input('Major vessels colored by fluoroscopy')
 
     with col1:
         thal = st.text_input(
-            'thal: 0 = normal; 1 = fixed defect; 2 = reversable defect')
+            'thal: 0 = normal; 1 = fixed defect; 2 = reversible defect')
 
     # code for Prediction
     heart_diagnosis = ''
@@ -130,7 +137,7 @@ if (selected == 'Heart Disease Prediction'):
         heart_prediction = heart_disease_model.predict(
             [[age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal]])
 
-        if (heart_prediction[0] == 1):
+        if heart_prediction[0] == 1:
             heart_diagnosis = 'The person is having heart disease'
         else:
             heart_diagnosis = 'The person does not have any heart disease'
@@ -139,7 +146,7 @@ if (selected == 'Heart Disease Prediction'):
 
 
 # Parkinson's Prediction Page
-if (selected == "Parkinsons Prediction"):
+if selected == "Parkinson's Prediction":
 
     # page title
     st.title("Parkinson's Disease Prediction using ML")
@@ -213,16 +220,17 @@ if (selected == "Parkinsons Prediction"):
         PPE = st.text_input('PPE')
 
     # code for Prediction
-    parkinsons_diagnosis = ''
+    parkinson_diagnosis = ''
 
     # creating a button for Prediction
     if st.button("Parkinson's Test Result"):
-        parkinsons_prediction = parkinsons_model.predict(
-            [[fo, fhi, flo, Jitter_percent, Jitter_Abs, RAP, PPQ, DDP, Shimmer, Shimmer_dB, APQ3, APQ5, APQ, DDA, NHR, HNR, RPDE, DFA, spread1, spread2, D2, PPE]])
+        parkinson_prediction = parkinson_model.predict(
+            [[fo, fhi, flo, Jitter_percent, Jitter_Abs, RAP, PPQ, DDP, Shimmer, Shimmer_dB, APQ3, APQ5, APQ, DDA, NHR,
+              HNR, RPDE, DFA, spread1, spread2, D2, PPE]])
 
-        if (parkinsons_prediction[0] == 1):
-            parkinsons_diagnosis = "The person has Parkinson's disease"
+        if parkinson_prediction[0] == 1:
+            parkinson_diagnosis = "The person has Parkinson's disease"
         else:
-            parkinsons_diagnosis = "The person does not have Parkinson's disease"
+            parkinson_diagnosis = "The person does not have Parkinson's disease"
 
-    st.success(parkinsons_diagnosis)
+    st.success(parkinson_diagnosis)
