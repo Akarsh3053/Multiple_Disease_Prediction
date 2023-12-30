@@ -5,8 +5,8 @@ from streamlit_option_menu import option_menu
 # Page config
 st.set_page_config(
     page_title="Multiple Disease Prediction",
-    page_icon="🥼",
-    layout="wide",
+    page_icon="🏥",
+    layout="wide"
 
 )
 
@@ -25,15 +25,19 @@ selected = option_menu('Multiple Disease Prediction Dashboard',
                        ['Home', 'Diabetes Prediction',
                         'Heart Disease Prediction',
                         "Parkinson's Prediction"],
-                       icons=['house', 'activity', 'heart', 'person'],
+                       icons=['house-fill', 'capsule-pill', 'heart-pulse-fill', 'people-fill'],
+                       menu_icon='clipboard2-pulse',
                        orientation='horizontal')
 
 
 # Diabetes Prediction Page
+if selected == 'Home':
+    st.title('Multiple Disease Prediction using Machine Learning')
+    st.image('assets/main_banner.gif')
 if selected == 'Diabetes Prediction':
 
     # page title
-    st.title('Diabetes Prediction using ML')
+    st.title('💊Diabetes Prediction using ML')
 
     # getting the input data from the user
     col1, col2, col3 = st.columns(3)
@@ -81,7 +85,7 @@ if selected == 'Diabetes Prediction':
 
 
 # Heart Disease Prediction Page
-if selected == 'Heart Disease Prediction':
+if selected == '❤️Heart Disease Prediction':
 
     # page title
     st.title('Heart Disease Prediction using ML')
@@ -149,7 +153,7 @@ if selected == 'Heart Disease Prediction':
 if selected == "Parkinson's Prediction":
 
     # page title
-    st.title("Parkinson's Disease Prediction using ML")
+    st.title("👨‍🦳Parkinson's Disease Prediction using ML")
 
     col1, col2, col3, col4, col5 = st.columns(5)
 
